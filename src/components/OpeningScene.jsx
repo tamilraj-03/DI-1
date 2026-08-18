@@ -107,11 +107,6 @@ const OpeningScene = ({ onOpenStart, onOpenComplete }) => {
         </div>
       </div>
 
-      {/* Note below card */}
-      <p className={`${styles.musicNote} ${isOpening ? styles.musicNoteHide : ''}`}>
-        ♫ Music may play on opening
-      </p>
-
       {/* Screen Corner Ornaments */}
       <div className={styles.cornerTL} aria-hidden="true">✦</div>
       <div className={styles.cornerTR} aria-hidden="true">✦</div>

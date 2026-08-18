@@ -13,7 +13,6 @@ import Gallery        from './components/Gallery';
 import FamilySection  from './components/FamilySection';
 import VenueSection   from './components/VenueSection';
 import ClosingSection from './components/ClosingSection';
-import MusicPlayer    from './components/MusicPlayer';
 import Petals         from './components/Petals';
 
 // Hooks
@@ -22,7 +21,6 @@ import useScrollReveal from './hooks/useScrollReveal';
 function App() {
   const [openingMounted, setOpeningMounted] = useState(true);
   const [mainVisible, setMainVisible]       = useState(false);
-  const [musicStarted, setMusicStarted]     = useState(false);
   const mainRef = useRef(null);
 
   // Activate scroll reveal observer once main content is shown
@@ -49,14 +47,11 @@ function App() {
   }, [mainVisible]);
 
   // When user clicks Open Invitation:
-  // 1. Start music immediately
-  // 2. Mount main invitation behind folding doors
   const handleOpenStart = () => {
-    setMusicStarted(true);
     setMainVisible(true);
   };
 
-  // 3. Unmount opening scene once the 3D paper fold completes
+  // Unmount opening scene once the 3D paper fold completes
   const handleOpenComplete = () => {
     setOpeningMounted(false);
   };
@@ -81,9 +76,6 @@ function App() {
           id="main-invitation"
           className="main-invitation-container"
         >
-          {/* Floating music player */}
-          <MusicPlayer musicStarted={musicStarted} />
-
           {/* Sections — in narrative order */}
           <Hero />
           <ScratchReveal />
