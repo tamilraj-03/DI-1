@@ -1,0 +1,59 @@
+.btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 800;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(107,16,32,0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  gap: 4px;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 28px rgba(107,16,32,0.5);
+}
+
+.playing {
+  animation: pulse-gold 2.5s ease-in-out infinite;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+}
+
+.icon {
+  font-size: 1.3rem;
+  color: #fff;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Equalizer bars */
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+  position: absolute;
+}
+
+.bar {
+  width: 3px;
+  height: 4px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 9999px;
+  animation: equalizer 0.8s ease-in-out infinite;
+  display: block;
+}
+
+.bar:nth-child(1) { animation-delay: 0s;    height: 12px; }
+.bar:nth-child(2) { animation-delay: 0.15s; height: 18px; }
+.bar:nth-child(3) { animation-delay: 0.3s;  height: 10px; }
+.bar:nth-child(4) { animation-delay: 0.45s; height: 16px; }

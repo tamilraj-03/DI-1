@@ -1,0 +1,160 @@
+.venueSection {
+  background: var(--ivory);
+}
+
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+/* Venue card */
+.venueCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 12px 60px rgba(26,10,8,0.14);
+  border: 1px solid rgba(200,169,110,0.15);
+}
+
+@media (max-width: 768px) {
+  .venueCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left info panel */
+.venueInfo {
+  background: var(--white);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+@media (max-width: 480px) {
+  .venueInfo { padding: 36px 24px; }
+}
+
+.venueIconRow {
+  margin-bottom: 16px;
+}
+
+.venueIcon {
+  font-size: 2.4rem;
+  animation: float 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+.venueName {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--maroon);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.venueAddress {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.venueDivider {
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto;
+}
+
+/* Meta row */
+.venueMeta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.metaLabel {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.metaValue {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.metaSep {
+  color: var(--gold);
+  font-size: 0.5rem;
+}
+
+/* Directions button */
+.directionsBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(107,16,32,0.3);
+  margin-top: auto;
+}
+
+.directionsBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(107,16,32,0.4);
+}
+
+/* Map */
+.mapWrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+}
+
+.mapOverlay {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(200,169,110,0.2);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mapWrap iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: sepia(20%) saturate(0.8);
+}

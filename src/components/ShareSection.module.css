@@ -1,0 +1,89 @@
+.share {
+  background: var(--ivory);
+  padding: 60px 20px;
+}
+
+.inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.card {
+  background: linear-gradient(135deg, var(--white), var(--ivory-dark));
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: var(--radius-card);
+  padding: 48px 36px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.shareIcon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 600;
+  color: var(--maroon);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btnWhatsApp {
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+}
+.btnWhatsApp:hover { box-shadow: 0 8px 24px rgba(37,211,102,0.5); }
+
+.btnCopy {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(200,169,110,0.35);
+}
+.btnCopy:hover { box-shadow: 0 8px 24px rgba(200,169,110,0.5); }
+
+.btnNative {
+  background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(107,16,32,0.3);
+}
+.btnNative:hover { box-shadow: 0 8px 24px rgba(107,16,32,0.45); }

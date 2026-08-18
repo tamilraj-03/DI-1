@@ -1,0 +1,610 @@
+/* ============================================================
+   Scratch Reveal & Countdown — 100% Mobile Optimized Layout
+   ============================================================ */
+
+.section {
+  background: linear-gradient(165deg, #fefcf8 0%, #f6eee0 40%, #fefcf8 100%);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.bgDecorTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #c8a96e, transparent);
+}
+
+.bgDecorBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 110, 0.4), transparent);
+}
+
+.header {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Progress Bar ────────────────────────────────────────── */
+.progressContainer {
+  max-width: 440px;
+  margin: 0 auto 20px;
+  padding: 0 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 6px;
+  background: rgba(200, 169, 110, 0.2);
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #b88628, #f5dfa0, #e8c96a);
+  border-radius: 9999px;
+  transition: width 0.25s ease-out;
+  box-shadow: 0 0 10px rgba(232, 201, 106, 0.8);
+}
+
+.progressText {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.statusUnlocked {
+  color: var(--maroon);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* ── Card Container ──────────────────────────────────────── */
+.cardOuter {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto 44px;
+  padding: 6px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(200, 169, 110, 0.5), rgba(255, 255, 255, 0.9), rgba(200, 169, 110, 0.4));
+  box-shadow:
+    0 20px 50px rgba(26, 10, 8, 0.12),
+    0 4px 16px rgba(200, 169, 110, 0.2);
+}
+
+.cardWrap {
+  position: relative;
+  width: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #18070b;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.cardWrap:active {
+  cursor: grabbing;
+}
+
+/* ── Revealed Content (Natural fluid flow — never clipped) ── */
+.revealContent {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(150deg, #1f070f 0%, #360c19 50%, #170408 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px 22px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.revealContentActive {
+  animation: cardShine 0.9s ease-out;
+}
+
+@keyframes cardShine {
+  0% { filter: brightness(1.3) saturate(1.15); }
+  100% { filter: brightness(1) saturate(1); }
+}
+
+.gleamEffect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.1) 48%,
+    rgba(255, 240, 180, 0.18) 50%,
+    transparent 55%
+  );
+  pointer-events: none;
+  animation: gleamSweep 5s infinite ease-in-out;
+}
+
+@keyframes gleamSweep {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  50%, 100% { transform: translateX(100%) translateY(100%); }
+}
+
+.revealInner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Plaque Header */
+.revealPlaqueHeader {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Cinzel', 'Lato', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.plaqueDot {
+  color: var(--gold);
+  font-size: 0.55rem;
+}
+
+/* Date Banner — Bold, Crisp, High-Contrast */
+.dateBanner {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  border-radius: 12px;
+  padding: 8px 18px;
+  box-shadow: inset 0 0 15px rgba(200, 169, 110, 0.1);
+  width: 100%;
+}
+
+.revealDateText {
+  font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.4rem, 4.2vw, 1.95rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #fff0c7 40%, #e8c96a 80%, #d4a342 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(200, 169, 110, 0.4));
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Info Grid — 2 neat column cards */
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.infoCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(200, 169, 110, 0.22);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.infoCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.infoIcon {
+  font-size: 0.78rem;
+}
+
+.infoLabel {
+  font-family: 'Cinzel', 'Lato', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--gold-light);
+}
+
+.infoVal {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infoSubVal {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.02em;
+  margin-top: 1px;
+}
+
+/* Action Buttons */
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.calBtn,
+.mapBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: 'Cinzel', 'Lato', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 9px 12px;
+  border-radius: 9999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+}
+
+.calBtn {
+  background: linear-gradient(135deg, #c8a96e, #dfb455);
+  color: #1a0a08;
+  box-shadow: 0 4px 14px rgba(200, 169, 110, 0.35);
+}
+
+.calBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(200, 169, 110, 0.55);
+}
+
+.mapBtn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(200, 169, 110, 0.4);
+}
+
+.mapBtn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.btnIcon {
+  font-size: 0.8rem;
+}
+
+.replayBtn {
+  background: none;
+  border: none;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(200, 169, 110, 0.85);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 6px 14px;
+  margin-top: 2px;
+  transition: color 0.2s ease;
+}
+
+.replayBtn:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* ── Canvases ────────────────────────────────────────────── */
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+  z-index: 4;
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 22px;
+}
+
+.canvasFaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.particleCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  z-index: 5;
+  border-radius: 22px;
+}
+
+/* ── Hint Badge ──────────────────────────────────────────── */
+.hintBadge {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background: rgba(26, 10, 8, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200, 169, 110, 0.55);
+  border-radius: 9999px;
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  animation: floatHint 2.4s ease-in-out infinite;
+}
+
+@keyframes floatHint {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+.hintIcon {
+  font-size: 1rem;
+  animation: shakeHand 1.2s ease-in-out infinite;
+}
+
+@keyframes shakeHand {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+
+.hintText {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff4d0;
+}
+
+/* ── Confetti Shower ─────────────────────────────────────── */
+.confettiContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 7;
+}
+
+.confettiPiece {
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0.9;
+  animation: confettiFall 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340px) rotate(720deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ── Countdown Wrapper ───────────────────────────────────── */
+.countdownWrap {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+}
+
+.countdownLabel {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.countdownDot {
+  font-size: 0.55rem;
+  color: var(--gold);
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.countUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+}
+
+.countFlip {
+  position: relative;
+  width: 82px;
+  height: 90px;
+  background: linear-gradient(150deg, #22080f 0%, #440e1e 50%, #1a050a 100%);
+  border-radius: 14px;
+  box-shadow:
+    0 12px 30px rgba(26, 10, 8, 0.25),
+    0 0 0 1.5px rgba(200, 169, 110, 0.4),
+    inset 0 0 16px rgba(200, 169, 110, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.countFlip::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 110, 0.35), transparent);
+}
+
+.countNumber {
+  font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(145deg, #ffffff 0%, #fae6b4 30%, #dfb755 70%, #b88628 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(200, 169, 110, 0.4));
+  line-height: 1;
+}
+
+.countLabel {
+  font-family: 'Cinzel', 'Lato', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.countSep {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgba(200, 169, 110, 0.65);
+  margin-bottom: 24px;
+  user-select: none;
+}
+
+.celebrationMsg {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.6rem;
+  color: var(--maroon);
+}
+
+/* ── Mobile Responsive (Flawless fit on all phone screens) ── */
+@media (max-width: 600px) {
+  .section {
+    padding: 50px 12px;
+  }
+  .cardOuter {
+    max-width: 100%;
+    margin: 0 auto 36px;
+    padding: 5px;
+    border-radius: 22px;
+  }
+  .cardWrap {
+    border-radius: 18px;
+  }
+  .revealContent {
+    padding: 20px 14px 16px;
+    gap: 8px;
+  }
+  .revealPlaqueHeader {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+  }
+  .dateBanner {
+    padding: 6px 12px;
+  }
+  .revealDateText {
+    font-size: 1.35rem;
+  }
+  .infoGrid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .infoCard {
+    padding: 6px 10px;
+  }
+  .infoVal {
+    font-size: 0.76rem;
+  }
+  .actionRow {
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .calBtn, .mapBtn {
+    padding: 8px 10px;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+  .replayBtn {
+    font-size: 0.65rem;
+    padding: 4px 8px;
+  }
+  .countFlip {
+    width: 64px;
+    height: 72px;
+  }
+  .countNumber {
+    font-size: 1.8rem;
+  }
+  .countUnit {
+    min-width: 64px;
+    gap: 6px;
+  }
+  .countSep {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+}

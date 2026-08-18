@@ -1,0 +1,13 @@
+/* App-level global overrides */
+
+/* Smooth scroll for all anchor navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+/* Page transition entrance */
+#main-invitation {
+  position: relative;
+}

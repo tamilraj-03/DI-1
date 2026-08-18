@@ -1,0 +1,215 @@
+.gallerySection {
+  background: linear-gradient(160deg, var(--cream) 0%, var(--ivory) 100%);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+/* Masonry-style grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 420px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Tall items */
+.grid > *:nth-child(1),
+.grid > *:nth-child(4) {
+  grid-row: span 2;
+}
+
+.gridItem {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  display: block;
+  aspect-ratio: 3/4;
+  box-shadow: var(--shadow-card);
+}
+
+.grid > *:nth-child(1),
+.grid > *:nth-child(4) {
+  aspect-ratio: unset;
+  min-height: 360px;
+}
+
+@media (max-width: 768px) {
+  .grid > *:nth-child(1),
+  .grid > *:nth-child(4) {
+    min-height: 280px;
+  }
+}
+
+.gridImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: block;
+}
+
+.gridItem:hover .gridImg {
+  transform: scale(1.07);
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(107,16,32,0.5), rgba(200,169,110,0.3));
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.35s ease;
+}
+
+.gridItem:hover .gridOverlay,
+.gridItem:focus-visible .gridOverlay {
+  opacity: 1;
+}
+
+.gridIcon {
+  color: #fff;
+  font-size: 2rem;
+  animation: spin-slow 4s linear infinite;
+  display: inline-block;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightboxBg {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 4, 4, 0.93);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.lightboxImgWrap {
+  position: relative;
+  z-index: 1;
+  max-width: min(90vw, 800px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.lightboxImg {
+  max-height: 80vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 60px rgba(0,0,0,0.5);
+  animation: lightboxEnter 0.35s ease;
+}
+
+@keyframes lightboxEnter {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.lightboxCaption {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+}
+
+.lightboxCounter {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(200,169,110,0.7);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 2;
+  color: rgba(255,255,255,0.8);
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.closeBtn:hover {
+  background: rgba(200,169,110,0.3);
+  color: #fff;
+}
+
+.navBtn {
+  position: absolute;
+  z-index: 2;
+  color: rgba(255,255,255,0.8);
+  font-size: 2.5rem;
+  cursor: pointer;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.navBtn:hover {
+  background: rgba(200,169,110,0.3);
+  transform: scale(1.1);
+}
+
+.prevBtn { left: 20px; }
+.nextBtn { right: 20px; }
+
+@media (max-width: 480px) {
+  .prevBtn { left: 8px; }
+  .nextBtn { right: 8px; }
+  .navBtn { width: 40px; height: 40px; font-size: 1.8rem; }
+}

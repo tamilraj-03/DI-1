@@ -1,0 +1,345 @@
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  background: #140508;
+  transition: opacity 0.45s ease 0.4s, visibility 0.45s ease 0.4s;
+}
+
+.sceneOpening {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.35s, visibility 0.5s ease 0.35s;
+}
+
+/* ── Background ──────────────────────────────────────────── */
+.bg {
+  position: absolute;
+  inset: 0;
+  background: #140508;
+  transition: transform 0.8s ease, opacity 0.6s ease;
+}
+
+.bgFade {
+  opacity: 0.3;
+  transform: scale(1.04);
+}
+
+.bgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.35) saturate(0.85);
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(80, 10, 24, 0.85) 0%, rgba(20, 5, 8, 0.98) 100%);
+}
+
+.mandalaTopRight {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  animation: spin-slow 70s linear infinite;
+  pointer-events: none;
+}
+
+.mandalaBottomLeft {
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  animation: spin-slow 90s linear infinite reverse;
+  pointer-events: none;
+}
+
+/* ── 3D Folding Card Container ───────────────────────────── */
+.cardContainer {
+  position: relative;
+  width: min(520px, 92vw);
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  animation: cardEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Smooth Paper Unfold on Open */
+.cardUnfolding {
+  transform: scale(1.08) translateY(-20px);
+  opacity: 0;
+  filter: brightness(1.1);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease;
+}
+
+/* ── Main Card Face ──────────────────────────────────────── */
+.cardFace {
+  position: relative;
+  z-index: 4;
+  background: linear-gradient(155deg, #260911 0%, #420f1e 45%, #1a050a 100%);
+  border: 1.5px solid rgba(200, 169, 110, 0.45);
+  border-radius: 20px;
+  padding: 44px 32px 36px;
+  text-align: center;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 0 35px rgba(200, 169, 110, 0.1);
+  overflow: hidden;
+}
+
+/* Inner Gold Filigree Frame */
+.cardFrame {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.frameCornerTL, .frameCornerTR, .frameCornerBL, .frameCornerBR {
+  position: absolute;
+  font-size: 0.65rem;
+  color: var(--gold-light);
+  pointer-events: none;
+  opacity: 0.7;
+}
+.frameCornerTL { top: 16px; left: 16px; }
+.frameCornerTR { top: 16px; right: 16px; }
+.frameCornerBL { bottom: 16px; left: 16px; }
+.frameCornerBR { bottom: 16px; right: 16px; }
+
+/* ── Typography & Elements ───────────────────────────────── */
+.guestGreeting {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(200, 169, 110, 0.95);
+  letter-spacing: 0.14em;
+  margin-bottom: 8px;
+}
+
+.togetherText {
+  font-family: 'Cinzel', 'Lato', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(200, 169, 110, 0.85);
+  margin-bottom: 12px;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px auto;
+  max-width: 220px;
+}
+
+.ornLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,169,110,0.7));
+  display: block;
+}
+
+.ornament > .ornLine:last-child {
+  background: linear-gradient(90deg, rgba(200,169,110,0.7), transparent);
+}
+
+.ornDiamond {
+  width: 6px;
+  height: 6px;
+  background: #c8a96e;
+  transform: rotate(45deg);
+  display: block;
+  flex-shrink: 0;
+}
+
+.brideName,
+.groomName {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.8rem, 8.5vw, 4.6rem);
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 2px 25px rgba(200, 169, 110, 0.55);
+  margin: 0;
+}
+
+.ampersand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: #c8a96e;
+  font-style: italic;
+  line-height: 1;
+  margin: 2px 0;
+}
+
+.inviteText {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.92);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 16px 0 26px;
+}
+
+.inviteText em {
+  color: #c8a96e;
+  font-style: italic;
+}
+
+/* ── CTA Button ──────────────────────────────────────────── */
+.openBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 44px;
+  background: linear-gradient(135deg, #b88628 0%, #e8c96a 40%, #f7e4a8 50%, #c8a050 70%, #9a7030 100%);
+  background-size: 200% auto;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 8px 30px rgba(200, 169, 110, 0.55),
+    0 0 0 2px rgba(255, 255, 255, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  animation: pulse-gold 2.5s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.4s ease;
+}
+
+.openBtn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 38px rgba(200, 169, 110, 0.75);
+  background-position: right center;
+}
+
+.openBtnPressed {
+  transform: scale(0.96);
+  box-shadow: 0 2px 10px rgba(200, 169, 110, 0.4);
+}
+
+.openBtnIcon {
+  font-size: 0.85rem;
+  color: #1a0a08;
+}
+
+.openBtnText {
+  font-family: 'Cinzel', 'Lato', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #1a0a08;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* ── 3D Top and Bottom Fold Accents ──────────────────────── */
+.foldPanelTop,
+.foldPanelBottom {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 20px;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+}
+
+.foldPanelTop {
+  top: -10px;
+  transform-origin: bottom center;
+}
+
+.foldPanelBottom {
+  bottom: -10px;
+  transform-origin: top center;
+}
+
+.foldPanelInner {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(200, 169, 110, 0.25) 0%, transparent 100%);
+  border-radius: 12px;
+}
+
+.cardUnfolding .foldPanelTop {
+  transform: rotateX(85deg) translateY(-20px);
+  opacity: 0;
+}
+
+.cardUnfolding .foldPanelBottom {
+  transform: rotateX(-85deg) translateY(20px);
+  opacity: 0;
+}
+
+/* Music note helper */
+.musicNote {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(200, 169, 110, 0.7);
+  letter-spacing: 0.12em;
+  margin-top: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.musicNoteHide {
+  opacity: 0;
+}
+
+/* Screen Corner Ornaments */
+.cornerTL, .cornerTR, .cornerBL, .cornerBR {
+  position: absolute;
+  font-size: 1rem;
+  color: rgba(200, 169, 110, 0.4);
+  z-index: 2;
+}
+.cornerTL { top: 20px; left: 20px; }
+.cornerTR { top: 20px; right: 20px; }
+.cornerBL { bottom: 20px; left: 20px; }
+.cornerBR { bottom: 20px; right: 20px; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .cardContainer {
+    width: 92vw;
+  }
+  .cardFace {
+    padding: 36px 18px 28px;
+  }
+  .openBtn {
+    padding: 13px 32px;
+  }
+  .openBtnText {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+  }
+  .mandalaTopRight, .mandalaBottomLeft {
+    animation: none;
+    opacity: 0.05;
+  }
+}
