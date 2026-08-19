@@ -149,108 +149,84 @@ const ScratchReveal = () => {
     ctx.globalCompositeOperation = 'destination-out';
   }, []);
 
-  /* ── Particle Animation Engine (0% CPU when idle) ── */
-  const resizeParticleCanvas = useCallback(() => {
+  /* ── Particle Animation Engine ──────────────────────── */
+  useEffect(() => {
     const pCanvas = particleCanvas.current;
     const cardWrap = cardWrapRef.current;
     if (!pCanvas || !cardWrap) return;
     const pCtx = pCanvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = cardWrap.offsetWidth;
-    const h = cardWrap.offsetHeight;
-    if (w === 0 || h === 0) return;
-    pCanvas.width = w * dpr;
-    pCanvas.height = h * dpr;
-    pCtx.scale(dpr, dpr);
+
+    const updateParticles = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const w = cardWrap.offsetWidth;
+      const h = cardWrap.offsetHeight;
+      pCanvas.width = w * dpr;
+      pCanvas.height = h * dpr;
+      pCtx.scale(dpr, dpr);
+      pCtx.clearRect(0, 0, w, h);
+
+      const colors = ['#ffe89c', '#f5cf68', '#ffffff', '#e2a336', '#ffb070'];
+
+      particles.current = particles.current.filter((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= p.decay;
+        p.rotation += p.rotSpeed;
+
+        if (p.alpha <= 0) return false;
+
+        pCtx.save();
+        pCtx.globalAlpha = Math.max(0, p.alpha);
+        pCtx.translate(p.x, p.y);
+        pCtx.rotate(p.rotation);
+
+        pCtx.fillStyle = p.color || colors[Math.floor(Math.random() * colors.length)];
+        if (p.shape === 'star') {
+          pCtx.font = `${p.size}px serif`;
+          pCtx.fillText('✦', -p.size / 2, p.size / 2);
+        } else if (p.shape === 'flower') {
+          pCtx.font = `${p.size}px serif`;
+          pCtx.fillText('❀', -p.size / 2, p.size / 2);
+        } else {
+          pCtx.beginPath();
+          pCtx.arc(0, 0, p.size, 0, Math.PI * 2);
+          pCtx.fill();
+        }
+
+        pCtx.restore();
+        return true;
+      });
+
+      animFrameId.current = requestAnimationFrame(updateParticles);
+    };
+
+    animFrameId.current = requestAnimationFrame(updateParticles);
+    return () => {
+      if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
+    };
   }, []);
 
-  const runParticleLoop = useCallback(() => {
-    const pCanvas = particleCanvas.current;
-    const cardWrap = cardWrapRef.current;
-    if (!pCanvas || !cardWrap) return;
-    const pCtx = pCanvas.getContext('2d');
-    const w = cardWrap.offsetWidth;
-    const h = cardWrap.offsetHeight;
-
-    pCtx.clearRect(0, 0, w, h);
-
-    if (particles.current.length === 0) {
-      animFrameId.current = null;
-      return;
-    }
-
-    const colors = ['#ffe89c', '#f5cf68', '#ffffff', '#e2a336', '#ffb070'];
-
-    particles.current = particles.current.filter((p) => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += p.gravity;
-      p.alpha -= p.decay;
-      p.rotation += p.rotSpeed;
-
-      if (p.alpha <= 0) return false;
-
-      pCtx.save();
-      pCtx.globalAlpha = Math.max(0, p.alpha);
-      pCtx.translate(p.x, p.y);
-      pCtx.rotate(p.rotation);
-
-      pCtx.fillStyle = p.color || colors[0];
-      if (p.shape === 'star') {
-        pCtx.font = `${p.size}px serif`;
-        pCtx.fillText('✦', -p.size / 2, p.size / 2);
-      } else if (p.shape === 'flower') {
-        pCtx.font = `${p.size}px serif`;
-        pCtx.fillText('❀', -p.size / 2, p.size / 2);
-      } else {
-        pCtx.beginPath();
-        pCtx.arc(0, 0, p.size, 0, Math.PI * 2);
-        pCtx.fill();
-      }
-
-      pCtx.restore();
-      return true;
-    });
-
-    animFrameId.current = requestAnimationFrame(runParticleLoop);
-  }, []);
-
-  const spawnParticles = useCallback((x, y, count = 2) => {
-    const shapes = ['circle', 'star'];
-    const colors = ['#fff1b8', '#ffd700', '#ffffff', '#e8c96a'];
-    const isMobile = window.innerWidth <= 768;
-    const spawnCount = isMobile ? Math.min(count, 2) : count;
-
-    for (let i = 0; i < spawnCount; i++) {
+  const spawnParticles = (x, y, count = 4) => {
+    const shapes = ['circle', 'star', 'flower'];
+    const colors = ['#fff1b8', '#ffd700', '#ffffff', '#e8c96a', '#ffa94d'];
+    for (let i = 0; i < count; i++) {
       particles.current.push({
-        x: x + (Math.random() - 0.5) * 12,
-        y: y + (Math.random() - 0.5) * 12,
-        vx: (Math.random() - 0.5) * 3,
-        vy: -Math.random() * 2.5 - 0.8,
+        x: x + (Math.random() - 0.5) * 16,
+        y: y + (Math.random() - 0.5) * 16,
+        vx: (Math.random() - 0.5) * 4,
+        vy: -Math.random() * 3.5 - 1,
         gravity: 0.1,
-        size: Math.random() * 6 + 3,
+        size: Math.random() * 8 + 4,
         alpha: 1,
-        decay: Math.random() * 0.04 + 0.02,
+        decay: Math.random() * 0.035 + 0.015,
         rotation: Math.random() * Math.PI * 2,
         rotSpeed: (Math.random() - 0.5) * 0.2,
         shape: shapes[Math.floor(Math.random() * shapes.length)],
         color: colors[Math.floor(Math.random() * colors.length)],
       });
     }
-
-    if (!animFrameId.current) {
-      animFrameId.current = requestAnimationFrame(runParticleLoop);
-    }
-  }, [runParticleLoop]);
-
-  useEffect(() => {
-    return () => {
-      if (animFrameId.current) {
-        cancelAnimationFrame(animFrameId.current);
-        animFrameId.current = null;
-      }
-    };
-  }, []);
+  };
 
   /* ── Canvas Resize Observer ─────────────────────────── */
   useEffect(() => {
@@ -258,17 +234,15 @@ const ScratchReveal = () => {
     if (!cardWrap) return;
 
     drawFoil();
-    resizeParticleCanvas();
 
     const ro = new ResizeObserver(() => {
-      resizeParticleCanvas();
       if (!hasRevealedRef.current) {
         drawFoil();
       }
     });
     ro.observe(cardWrap);
     return () => ro.disconnect();
-  }, [drawFoil, resizeParticleCanvas]);
+  }, [drawFoil]);
 
   /* ── Scratch Position & Threshold ───────────────────── */
   const getPos = (e, canvas) => {
@@ -283,12 +257,12 @@ const ScratchReveal = () => {
 
   const calculateProgress = useCallback((canvas) => {
     const ctx = canvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = window.devicePixelRatio || 1;
     const w = canvas.offsetWidth;
     const h = canvas.offsetHeight;
 
-    const sampleCols = 24;
-    const sampleRows = 16;
+    const sampleCols = 36;
+    const sampleRows = 20;
     const imgData = ctx.getImageData(0, 0, Math.floor(w * dpr), Math.floor(h * dpr)).data;
     const strideX = Math.floor((w * dpr) / sampleCols);
     const strideY = Math.floor((h * dpr) / sampleRows);
@@ -327,7 +301,7 @@ const ScratchReveal = () => {
 
     const w = canvas ? canvas.offsetWidth : 400;
     const h = canvas ? canvas.offsetHeight : 250;
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 35; i++) {
       spawnParticles(Math.random() * w, Math.random() * h, 1);
     }
 
@@ -371,12 +345,10 @@ const ScratchReveal = () => {
     ctx.stroke();
 
     lastPoint.current = currPos;
-    spawnParticles(currPos.x, currPos.y, 2);
-  }, [spawnParticles]);
+    spawnParticles(currPos.x, currPos.y, 3);
+  }, []);
 
-  /* Pointer & Touch Handlers with rAF throttle */
-  const moveRafId = useRef(null);
-
+  /* Pointer & Touch Handlers */
   const handleStart = (e) => {
     if (revealed) return;
     if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
@@ -393,13 +365,7 @@ const ScratchReveal = () => {
     if (!isDrawing.current || revealed) return;
     if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
     const pos = getPos(e, canvasRef.current);
-
-    if (!moveRafId.current) {
-      moveRafId.current = requestAnimationFrame(() => {
-        scratchAt(pos);
-        moveRafId.current = null;
-      });
-    }
+    scratchAt(pos);
   };
 
   const handleEnd = () => {
@@ -407,10 +373,6 @@ const ScratchReveal = () => {
     isDrawing.current = false;
     lastPoint.current = null;
     midPoint.current = null;
-    if (moveRafId.current) {
-      cancelAnimationFrame(moveRafId.current);
-      moveRafId.current = null;
-    }
     if (canvasRef.current && !revealed) {
       calculateProgress(canvasRef.current);
     }

@@ -68,7 +68,6 @@ const Gallery = () => {
                 alt={img.alt}
                 className={styles.gridImg}
                 loading="lazy"
-                decoding="async"
               />
               <div className={styles.gridOverlay}>
                 <span className={styles.gridIcon} aria-hidden="true">✦</span>

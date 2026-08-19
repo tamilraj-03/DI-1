@@ -1,6 +1,7 @@
 import React from 'react';
 import { weddingConfig } from '../weddingConfig';
 import useGuestName from '../hooks/useGuestName';
+import Petals from './Petals';
 import { MandalaCircle } from './Ornament';
 import styles from './Hero.module.css';
 
@@ -12,15 +13,12 @@ const Hero = () => {
     <section id="hero" className={styles.hero} aria-label="Wedding Hero">
       {/* Background couple photo */}
       <div className={styles.heroBg}>
-        <img
-          src="/couple.jpg"
-          alt={`${bride.name} and ${groom.name}`}
-          className={styles.heroBgImg}
-          decoding="async"
-          fetchPriority="high"
-        />
+        <img src="/couple.jpg" alt={`${bride.name} and ${groom.name}`} className={styles.heroBgImg} />
         <div className={styles.heroOverlay} />
       </div>
+
+      {/* Floating petals */}
+      <Petals count={12} />
 
       {/* Mandala bg decorations */}
       <div className={styles.mandalaTop} aria-hidden="true">

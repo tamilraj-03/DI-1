@@ -23,8 +23,28 @@ function App() {
   const [mainVisible, setMainVisible]       = useState(false);
   const mainRef = useRef(null);
 
-  // Activate scroll reveal observer when main content mounts
-  useScrollReveal([mainVisible]);
+  // Activate scroll reveal observer once main content is shown
+  useScrollReveal();
+
+  // Re-trigger scroll reveal after main content mounts
+  useEffect(() => {
+    if (!mainVisible) return;
+    const timeout = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+      return () => observer.disconnect();
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [mainVisible]);
 
   // When user clicks Open Invitation:
   const handleOpenStart = () => {
@@ -39,7 +59,7 @@ function App() {
   return (
     <div className="app-root">
       {/* Full-Page Auspicious Flower Shower (Rose, Jasmine, Marigold) */}
-      <Petals isGlobal={true} count={14} />
+      <Petals isGlobal={true} count={18} />
 
       {/* 3D Paper Fold Opening Scene */}
       {openingMounted && (
@@ -79,18 +99,25 @@ function App() {
         }
 
         .main-invitation-container {
-          animation: paperUnfold 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+          animation: paperUnfold 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
           transform-origin: center top;
+          will-change: transform, opacity;
         }
 
         @keyframes paperUnfold {
           0% {
             opacity: 0;
-            transform: scale(0.97) translateY(16px);
+            transform: scale(0.96) translateY(20px);
+            filter: blur(2px) brightness(0.9);
+          }
+          40% {
+            opacity: 0.8;
+            filter: blur(0px) brightness(0.95);
           }
           100% {
             opacity: 1;
             transform: scale(1) translateY(0);
+            filter: brightness(1);
           }
         }
       `}</style>

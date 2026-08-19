@@ -38,7 +38,6 @@ const CoupleSection = () => {
                 alt={`Bride ${bride.fullName}`}
                 className={styles.portrait}
                 loading="lazy"
-                decoding="async"
               />
               <div className={styles.imageGlow} aria-hidden="true" />
             </div>
@@ -67,7 +66,6 @@ const CoupleSection = () => {
                 alt={`Groom ${groom.fullName}`}
                 className={styles.portrait}
                 loading="lazy"
-                decoding="async"
               />
               <div className={styles.imageGlow} aria-hidden="true" />
             </div>
