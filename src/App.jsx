@@ -23,28 +23,8 @@ function App() {
   const [mainVisible, setMainVisible]       = useState(false);
   const mainRef = useRef(null);
 
-  // Activate scroll reveal observer once main content is shown
-  useScrollReveal();
-
-  // Re-trigger scroll reveal after main content mounts
-  useEffect(() => {
-    if (!mainVisible) return;
-    const timeout = setTimeout(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-      );
-      document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
-      return () => observer.disconnect();
-    }, 100);
-    return () => clearTimeout(timeout);
-  }, [mainVisible]);
+  // Activate scroll reveal observer when main content mounts
+  useScrollReveal([mainVisible]);
 
   // When user clicks Open Invitation:
   const handleOpenStart = () => {
@@ -59,7 +39,7 @@ function App() {
   return (
     <div className="app-root">
       {/* Full-Page Auspicious Flower Shower (Rose, Jasmine, Marigold) */}
-      <Petals isGlobal={true} count={18} />
+      <Petals isGlobal={true} count={14} />
 
       {/* 3D Paper Fold Opening Scene */}
       {openingMounted && (

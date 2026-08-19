@@ -1,6 +1,5 @@
 import React from 'react';
 import { weddingConfig } from '../weddingConfig';
-import Petals from './Petals';
 import { MandalaCircle } from './Ornament';
 import styles from './ClosingSection.module.css';
 
@@ -11,12 +10,9 @@ const ClosingSection = () => {
     <section className={`section ${styles.closing}`} aria-label="Closing message">
       {/* Background */}
       <div className={styles.bg}>
-        <img src="/couple.jpg" alt="" aria-hidden="true" className={styles.bgImg} />
+        <img src="/couple.jpg" alt="" aria-hidden="true" className={styles.bgImg} decoding="async" loading="lazy" />
         <div className={styles.bgOverlay} />
       </div>
-
-      {/* Petals */}
-      <Petals count={18} />
 
       {/* Mandala */}
       <div className={styles.mandala} aria-hidden="true">

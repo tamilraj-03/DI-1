@@ -141,38 +141,55 @@ a {
   line-height: 1.7;
 }
 
-/* ── Scroll animation base states ───────────────────────── */
+/* ── Scroll animation base states (GPU Accelerated) ────── */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(28px) translateZ(0);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0);
+  will-change: auto;
 }
 
 .reveal-left {
   opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateX(-32px) translateZ(0);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-left.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) translateZ(0);
+  will-change: auto;
 }
 
 .reveal-right {
   opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateX(32px) translateZ(0);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-right.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) translateZ(0);
+  will-change: auto;
+}
+
+/* ── Content Visibility for offscreen sections (Skips layout/paint till scrolled) ── */
+#story,
+#events,
+#gallery,
+#family,
+#venue,
+#rsvp {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
 }
 
 /* ── Reduced Motion ──────────────────────────────────────── */
@@ -184,7 +201,7 @@ a {
   }
   .reveal, .reveal-left, .reveal-right {
     opacity: 1;
-    transform: none;
+    transform: none !important;
   }
 }
 
@@ -192,16 +209,16 @@ a {
 @media (max-width: 768px) {
   /* Shorter, snappier reveals on mobile */
   .reveal {
-    transform: translateY(18px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateY(14px) translateZ(0);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
   }
   .reveal-left {
-    transform: translateX(-20px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateX(-16px) translateZ(0);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
   }
   .reveal-right {
-    transform: translateX(20px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateX(16px) translateZ(0);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
   }
 }
 

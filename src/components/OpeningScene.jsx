@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { weddingConfig } from '../weddingConfig';
 import useGuestName from '../hooks/useGuestName';
-import Petals from './Petals';
 import { MandalaCircle } from './Ornament';
 import styles from './OpeningScene.module.css';
 
@@ -23,12 +22,9 @@ const OpeningScene = ({ onOpenStart, onOpenComplete }) => {
     <div className={`${styles.scene} ${isOpening ? styles.sceneOpening : ''}`} role="main">
       {/* Background */}
       <div className={`${styles.bg} ${isOpening ? styles.bgFade : ''}`}>
-        <img src="/opening-bg.jpg" alt="" aria-hidden="true" className={styles.bgImg} />
+        <img src="/opening-bg.jpg" alt="" aria-hidden="true" className={styles.bgImg} decoding="async" />
         <div className={styles.bgOverlay} />
       </div>
-
-      {/* Floating petals */}
-      <Petals count={16} />
 
       {/* Background Mandalas */}
       <div className={styles.mandalaTopRight} aria-hidden="true">
