@@ -79,25 +79,18 @@ function App() {
         }
 
         .main-invitation-container {
-          animation: paperUnfold 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+          animation: paperUnfold 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
           transform-origin: center top;
-          will-change: transform, opacity;
         }
 
         @keyframes paperUnfold {
           0% {
             opacity: 0;
-            transform: scale(0.96) translateY(20px);
-            filter: blur(2px) brightness(0.9);
-          }
-          40% {
-            opacity: 0.8;
-            filter: blur(0px) brightness(0.95);
+            transform: scale(0.97) translateY(16px);
           }
           100% {
             opacity: 1;
             transform: scale(1) translateY(0);
-            filter: brightness(1);
           }
         }
       `}</style>

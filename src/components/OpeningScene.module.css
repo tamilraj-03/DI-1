@@ -7,8 +7,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  perspective: 1400px;
-  transform-style: preserve-3d;
   background: #140508;
   transition: opacity 0.45s ease 0.4s, visibility 0.45s ease 0.4s;
 }
@@ -24,6 +22,7 @@
 .bg {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: #140508;
   transition: transform 0.8s ease, opacity 0.6s ease;
 }
@@ -38,19 +37,21 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.35) saturate(0.85);
+  filter: brightness(0.4) saturate(0.9);
 }
 
 .bgOverlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(80, 10, 24, 0.85) 0%, rgba(20, 5, 8, 0.98) 100%);
+  z-index: 2;
+  background: radial-gradient(ellipse at center, rgba(80, 10, 24, 0.82) 0%, rgba(20, 5, 8, 0.96) 100%);
 }
 
 .mandalaTopRight {
   position: absolute;
   top: -80px;
   right: -80px;
+  z-index: 3;
   animation: spin-slow 70s linear infinite;
   pointer-events: none;
 }
@@ -59,24 +60,23 @@
   position: absolute;
   bottom: -80px;
   left: -80px;
+  z-index: 3;
   animation: spin-slow 90s linear infinite reverse;
   pointer-events: none;
 }
 
-/* ── 3D Folding Card Container ───────────────────────────── */
+/* ── Card Container ──────────────────────────────────────── */
 .cardContainer {
   position: relative;
+  z-index: 10;
   width: min(520px, 92vw);
-  perspective: 1400px;
-  transform-style: preserve-3d;
-  animation: cardEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: transform, opacity;
+  animation: cardEntrance 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes cardEntrance {
   0% {
     opacity: 0;
-    transform: translateY(30px) scale(0.96);
+    transform: translateY(20px) scale(0.97);
   }
   100% {
     opacity: 1;
@@ -86,23 +86,22 @@
 
 /* Smooth Paper Unfold on Open */
 .cardUnfolding {
-  transform: scale(1.08) translateY(-20px);
+  transform: scale(1.06) translateY(-16px);
   opacity: 0;
-  filter: brightness(1.1);
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease;
 }
 
 /* ── Main Card Face ──────────────────────────────────────── */
 .cardFace {
   position: relative;
-  z-index: 4;
+  z-index: 12;
   background: linear-gradient(155deg, #260911 0%, #420f1e 45%, #1a050a 100%);
   border: 1.5px solid rgba(200, 169, 110, 0.45);
   border-radius: 20px;
   padding: 44px 32px 36px;
   text-align: center;
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.65),
+    0 20px 60px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 0 35px rgba(200, 169, 110, 0.1);
   overflow: hidden;
@@ -288,12 +287,12 @@
 }
 
 .cardUnfolding .foldPanelTop {
-  transform: rotateX(85deg) translateY(-20px);
+  transform: scaleY(0) translateY(-15px);
   opacity: 0;
 }
 
 .cardUnfolding .foldPanelBottom {
-  transform: rotateX(-85deg) translateY(20px);
+  transform: scaleY(0) translateY(15px);
   opacity: 0;
 }
 
